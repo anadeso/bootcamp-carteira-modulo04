@@ -2,7 +2,9 @@ package br.com.alura.carteira.dto;
 
 import br.com.alura.carteira.entities.TipoTransacao;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -13,6 +15,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TransacaoFormDto {
 
     @NotBlank

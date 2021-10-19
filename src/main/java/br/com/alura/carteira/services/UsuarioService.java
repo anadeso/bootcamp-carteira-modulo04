@@ -18,6 +18,7 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     private ModelMapper modelMapper = new ModelMapper();
 
     @Transactional(readOnly = true)
