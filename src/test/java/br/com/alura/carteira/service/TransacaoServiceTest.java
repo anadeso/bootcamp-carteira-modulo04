@@ -23,15 +23,15 @@ public class TransacaoServiceTest {
 
     @Mock
     public TransacaoRepository transacaoRepository;
+
     @Mock
     private UsuarioRepository usuarioRepository;
 
     @InjectMocks
     private TransacaoService transacaoService;
 
-    @Test
-    public void deveCadastrarUmaTransacaoService() {
-        TransacaoFormDto transacaoFormDto = new TransacaoFormDto(
+    private TransacaoFormDto getTransacaoFormDto() {
+        return new TransacaoFormDto(
                 "ITSA4",
                 new BigDecimal("10.45"),
                 120,
@@ -39,10 +39,15 @@ public class TransacaoServiceTest {
                 TipoTransacao.COMPRA,
                 1L
         );
+    }
+
+    @Test
+    public void deveCadastrarUmaTransacaoService() {
+        TransacaoFormDto transacaoFormDto = getTransacaoFormDto();
 
         TransacaoDto dto = transacaoService.cadastrar(transacaoFormDto);
 
-        //Mockito.verify(transacaoRepository.save(Mockito.any()));
+        Mockito.verify(transacaoRepository).save(Mockito.any());
 
         Assertions.assertEquals(transacaoFormDto.getTicker(), dto.getTicker());
         Assertions.assertEquals(transacaoFormDto.getPreco(), dto.getPreco());
@@ -52,14 +57,7 @@ public class TransacaoServiceTest {
 
     @Test
     public void naoDeveCadastrarQuandoIdUsuarioNaoExistir() {
-       TransacaoFormDto transacaoFormDto = new TransacaoFormDto(
-                "ITSA4",
-                new BigDecimal("10.45"),
-                120,
-                LocalDate.now(),
-                TipoTransacao.COMPRA,
-                1L
-        );
+        TransacaoFormDto transacaoFormDto = getTransacaoFormDto();
 
         Mockito.when(usuarioRepository.getById(transacaoFormDto.getUsuarioId()))
                 .thenThrow(EntityNotFoundException.class);
@@ -67,4 +65,5 @@ public class TransacaoServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () ->  transacaoService.cadastrar(transacaoFormDto));
     }
+
 }

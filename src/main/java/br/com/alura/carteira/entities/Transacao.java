@@ -21,7 +21,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@ToString(exclude = { "dataTransacao", "quantidade", "tipoTransacao"})
+@ToString(exclude = { "dataTransacao", "quantidade"})
 @AllArgsConstructor()
 @NoArgsConstructor
 @Entity
@@ -43,4 +43,13 @@ public class Transacao {
 
     @ManyToOne
     private Usuario usuario;
+
+    public Transacao(String ticker, BigDecimal preco, int quantidade, LocalDate dataTransacao, TipoTransacao tipoTransacao, Usuario usuario) {
+        this.ticker = ticker;
+        this.preco = preco;
+        this.quantidade = quantidade;
+        this.dataTransacao = dataTransacao;
+        this.tipoTransacao = tipoTransacao;
+        this.usuario = usuario;
+    }
 }
