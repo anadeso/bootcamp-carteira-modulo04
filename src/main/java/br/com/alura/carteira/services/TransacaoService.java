@@ -1,5 +1,6 @@
 package br.com.alura.carteira.services;
 
+import br.com.alura.carteira.dto.AtualizacaoTransacaoFormDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.entities.Transacao;
@@ -50,4 +51,12 @@ public class TransacaoService {
             throw new IllegalArgumentException("Usuario inexistente!");
         }
     }
+
+    @Transactional
+    public TransacaoDto atualizar(AtualizacaoTransacaoFormDto dto) {
+        Transacao transacao = transacaoRepository.getById(dto.getId());
+        transacao.atualizarInformacoes(dto.getTicker(), dto.getPreco(), dto.getQuantidade(), dto.getDataTransacao(), dto.getTipoTransacao());
+        return modelMapper.map(transacao, TransacaoDto.class);
+    }
+
 }
