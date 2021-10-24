@@ -1,6 +1,7 @@
 package br.com.alura.carteira.services;
 
 import br.com.alura.carteira.dto.AtualizacaoTransacaoFormDto;
+import br.com.alura.carteira.dto.TransacaoDetalhadaDto;
 import br.com.alura.carteira.dto.TransacaoDto;
 import br.com.alura.carteira.dto.TransacaoFormDto;
 import br.com.alura.carteira.entities.Transacao;
@@ -59,4 +60,16 @@ public class TransacaoService {
         return modelMapper.map(transacao, TransacaoDto.class);
     }
 
+    @Transactional
+    public void delete(Long id) {
+        transacaoRepository.deleteById(id);
+    }
+
+    @Transactional
+    public TransacaoDetalhadaDto buscaPoriD(Long id) {
+        Transacao transacao = transacaoRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException());
+        return modelMapper.map(transacao, TransacaoDetalhadaDto.class);
+    }
 }
